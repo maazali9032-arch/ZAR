@@ -44,9 +44,7 @@ export function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-brand-50/30 px-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-600 text-xl font-bold text-white">
-            Z
-          </div>
+          <img src="/apple-icon.png" alt="ZAR Wedding Invitations" className="mx-auto mb-4 h-16 w-16 rounded-2xl object-cover shadow-sm" />
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">ZAR Admin Dashboard</h1>
           <p className="mt-1 text-sm text-gray-500">Sign in to your admin account</p>
         </div>

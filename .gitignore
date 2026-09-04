@@ -24,6 +24,7 @@ dist-ssr
 
 # Local editor metadata and reference material; neither is application source.
 .trae/
+.bolt/
 ZAR_V2_Admin_Dashboard_Specification.docx
 supabase/.temp/
 

@@ -38,9 +38,7 @@ export function Sidebar({ mobileOpen, onCloseMobile }: SidebarProps) {
       >
         <div className="flex h-16 items-center justify-between border-b border-gray-100 px-5">
           <NavLink to="/dashboard" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-bold text-white">
-              Z
-            </div>
+            <img src="/apple-icon.png" alt="ZAR Wedding Invitations" className="h-9 w-9 rounded-lg object-cover" />
             <span className="text-lg font-bold tracking-tight text-gray-900">ZAR</span>
             <span className="ml-1 rounded bg-brand-50 px-1.5 py-0.5 text-[10px] font-semibold text-brand-600">
               V2

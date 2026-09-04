@@ -1,5 +1,5 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "zar-v2-admin-dashboard",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,6 +13,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
     "@types/qrcode": "^1.5.6",
+    "jsqr": "^1.4.0",
     "lucide-react": "^0.446.0",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",

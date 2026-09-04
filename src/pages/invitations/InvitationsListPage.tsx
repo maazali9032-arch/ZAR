@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Download, ExternalLink, Plus, QrCode, Share2 } from 'lucide-react';
-import QRCode from 'qrcode';
+import { createGoldenClassicQr } from '@/lib/goldenClassicQr';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 import { Card } from '@/components/ui/Card';
@@ -77,9 +77,13 @@ export function InvitationsListPage() {
     }
     setQrImage(null);
     setQrError('');
-    QRCode.toDataURL(url, { width: 360, margin: 2, errorCorrectionLevel: 'M' })
+    createGoldenClassicQr({
+      url,
+      groomName: qrInvitation.groom_name,
+      brideName: qrInvitation.bride_name,
+    })
       .then(setQrImage)
-      .catch(() => setQrError('Could not generate the QR image.'));
+      .catch((err) => setQrError(err instanceof Error ? err.message : 'Could not generate and verify the QR image.'));
   }, [qrInvitation]);
 
   const downloadQr = () => {
@@ -335,8 +339,8 @@ export function InvitationsListPage() {
       <Modal
         open={!!qrInvitation}
         onClose={() => { setQrInvitation(null); setQrImage(null); setQrError(''); }}
-        title="Invitation QR Code"
-        size="sm"
+        title="Golden Classic Invitation QR"
+        size="lg"
         footer={
           <>
             <Button variant="outline" onClick={downloadQr} disabled={!qrImage}>
@@ -355,12 +359,12 @@ export function InvitationsListPage() {
             {qrInvitation && [qrInvitation.groom_name, qrInvitation.bride_name].filter(Boolean).join(' & ')}
           </p>
           {qrImage ? (
-            <img src={qrImage} alt="Invitation QR code" className="mx-auto h-72 w-72 rounded-lg border border-gray-200 bg-white p-2" />
+            <img src={qrImage} alt="Golden Classic invitation QR code" className="mx-auto max-h-[70vh] w-full max-w-xl rounded-lg border border-amber-200 bg-[#fffaf0]" />
           ) : (
-            <div className="flex h-72 items-center justify-center text-sm text-gray-500">{qrError || 'Generating QR image...'}</div>
+            <div className="flex h-72 items-center justify-center text-sm text-gray-500">{qrError || 'Generating and verifying QR image...'}</div>
           )}
           <p className="text-xs text-gray-500">
-            Share sends the QR PNG image through your device share menu, including WhatsApp when it is available.
+            This Golden Classic QR encodes the exact public invitation URL and is decoded locally before it can be shared.
           </p>
           {qrError && qrImage && <p className="text-xs text-warning-700">{qrError}</p>}
         </div>
