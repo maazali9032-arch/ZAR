@@ -1,2 +1,5 @@
-[functions.create-users]
-verify_jwt = false
+[functions.create-shop-owner]
+verify_jwt = true
+
+[functions.create-shop-with-owner]
+verify_jwt = true

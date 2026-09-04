@@ -1,5 +1,5 @@
-import { useState, type FormEvent } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -9,13 +9,11 @@ export function LoginPage() {
   const { signIn } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const location = useLocation();
+  const passwordRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/dashboard';
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,7 +29,15 @@ export function LoginPage() {
     }
 
     toast('Signed in successfully.', 'success');
-    navigate(from, { replace: true });
+    // A successful sign-in always starts at the user's dashboard, never at a
+    // stale invitation/detail route preserved by the browser.
+    navigate('/dashboard', { replace: true });
+  };
+
+  const focusPasswordOnEnter = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    passwordRef.current?.focus();
   };
 
   return (
@@ -56,6 +62,7 @@ export function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="admin@example.com"
               autoComplete="email"
+              onKeyDown={focusPasswordOnEnter}
             />
             <Input
               label="Password"
@@ -66,6 +73,7 @@ export function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               autoComplete="current-password"
+              ref={passwordRef}
             />
 
             {error && (

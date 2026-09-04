@@ -411,9 +411,11 @@ export function InvitationDetailPage() {
                   <Input label="Bride Name" value={form.bride_name} onChange={(e) => updateForm('bride_name', e.target.value)} />
                 </div>
               ) : coupleName} />
-              <DetailRow icon={Hash} label="Slug" mono value={editing ? (
-                <Input className="w-full" value={form.slug} onChange={(e) => updateForm('slug', e.target.value.toLowerCase())} error={errors.slug} />
-              ) : invitation.slug} />
+              {isAdmin && (
+                <DetailRow icon={Hash} label="Slug" mono value={editing ? (
+                  <Input className="w-full" value={form.slug} onChange={(e) => updateForm('slug', e.target.value.toLowerCase())} error={errors.slug} />
+                ) : invitation.slug} />
+              )}
               <DetailRow
                 icon={ExternalLink}
                 label="Public Invitation Link"
@@ -423,7 +425,7 @@ export function InvitationDetailPage() {
                   </a>
                 ) : 'Not available'}
               />
-              <DetailRow icon={Hash} label="Invitation Code" mono value={invitation.invitation_code} />
+              {isAdmin && <DetailRow icon={Hash} label="Invitation Code" mono value={invitation.invitation_code} />}
               <DetailRow
                 icon={Calendar}
                 label="Start Date"
@@ -454,11 +456,11 @@ export function InvitationDetailPage() {
           </Card>
 
           <div className="space-y-4">
-            <Card>
-              <CardHeader title="Shop" />
-              <div className="mt-4">
-                {invitation.shop ? (
-                  isAdmin ? (
+            {isAdmin && (
+              <Card>
+                <CardHeader title="Shop" />
+                <div className="mt-4">
+                  {invitation.shop ? (
                     <Link
                       to={`/shops/${invitation.shop.id}`}
                       className="text-sm font-medium text-brand-600 hover:text-brand-700"
@@ -466,13 +468,11 @@ export function InvitationDetailPage() {
                       {invitation.shop.shop_name}
                     </Link>
                   ) : (
-                    <p className="text-sm text-gray-900">{invitation.shop.shop_name}</p>
-                  )
-                ) : (
-                  <p className="text-sm text-gray-500">Shop not found</p>
-                )}
-              </div>
-            </Card>
+                    <p className="text-sm text-gray-500">Shop not found</p>
+                  )}
+                </div>
+              </Card>
+            )}
 
             <Card>
               <CardHeader title="Design" />

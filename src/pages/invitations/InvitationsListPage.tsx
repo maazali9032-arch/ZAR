@@ -253,11 +253,78 @@ export function InvitationsListPage() {
             />
           </div>
         ) : (
-          <Table
-            columns={columns}
-            data={filtered}
-            onRowClick={(row) => navigate(`/invitations/${row.id}`)}
-          />
+          <>
+            <div className="hidden md:block">
+              <Table
+                columns={columns}
+                data={filtered}
+                onRowClick={(row) => navigate(`/invitations/${row.id}`)}
+              />
+            </div>
+            <div className="space-y-3 p-4 md:hidden">
+              {filtered.map((invitation) => {
+                const couple = [invitation.groom_name, invitation.bride_name].filter(Boolean).join(' & ') || 'Unnamed invitation';
+                const url = invitationUrl(invitation);
+                return (
+                  <div
+                    key={invitation.id}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => navigate(`/invitations/${invitation.id}`)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        navigate(`/invitations/${invitation.id}`);
+                      }
+                    }}
+                    className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left shadow-sm transition-colors hover:border-brand-200 hover:bg-brand-50/30"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="truncate text-base font-semibold text-gray-900">{couple}</p>
+                        {isAdmin && <p className="mt-1 font-mono text-xs text-gray-500">{invitation.invitation_code}</p>}
+                      </div>
+                      <StatusBadge status={invitation.status} />
+                    </div>
+                    <div className="mt-3 border-t border-gray-100 pt-3 text-sm">
+                      <p className="text-xs font-medium uppercase tracking-wide text-gray-400">Design</p>
+                      <p className="mt-1 text-gray-700">{invitation.design?.design_name || '—'}</p>
+                      {isAdmin && (
+                        <>
+                          <p className="mt-3 text-xs font-medium uppercase tracking-wide text-gray-400">Shop</p>
+                          <p className="mt-1 text-gray-700">{invitation.shop?.shop_name || '—'}</p>
+                        </>
+                      )}
+                    </div>
+                    {!isAdmin && (
+                      <div className="mt-4 flex flex-wrap gap-2 border-t border-gray-100 pt-3">
+                        {url && (
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(event) => event.stopPropagation()}
+                            className="inline-flex min-w-0 flex-1 items-center justify-center gap-1 rounded-lg border border-brand-200 px-3 py-2 text-xs font-medium text-brand-700"
+                          >
+                            <ExternalLink className="h-3.5 w-3.5 shrink-0" /> Open invite
+                          </a>
+                        )}
+                        <span
+                          role="button"
+                          tabIndex={0}
+                          onClick={(event) => { event.stopPropagation(); setQrInvitation(invitation); }}
+                          onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); setQrInvitation(invitation); } }}
+                          className="inline-flex flex-1 items-center justify-center gap-1 rounded-lg border border-gray-200 px-3 py-2 text-xs font-medium text-gray-700"
+                        >
+                          <QrCode className="h-3.5 w-3.5" /> View QR
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </>
         )}
       </Card>
 

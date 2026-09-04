@@ -608,7 +608,7 @@ function CreateShopOwnerModal({
     if (!form.email.trim()) e.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Invalid email format';
     if (!form.full_name.trim()) e.full_name = 'Full name is required';
-    if (form.password && form.password.length < 6) e.password = 'Password must be at least 6 characters';
+    if (form.password.length < 8) e.password = 'Password must be at least 8 characters';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -664,8 +664,8 @@ function CreateShopOwnerModal({
     >
       <div className="space-y-4">
         <div className="rounded-lg border border-brand-200 bg-brand-50/50 p-3 text-xs text-brand-700">
-          Adding owner for shop: <strong>{shop.shop_name}</strong>. Leave password blank to send a
-          password-setup email instead.
+          Adding owner for shop: <strong>{shop.shop_name}</strong>. This creates the login account,
+          profile, and shop assignment together in the shared Supabase project.
         </div>
         <Input
           label="Owner Email"
@@ -685,13 +685,14 @@ function CreateShopOwnerModal({
           placeholder="Full name of the shop owner"
         />
         <Input
-          label="Temporary Password (Optional)"
+          label="Initial Login Password"
           type="password"
+          required
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           error={errors.password}
-          placeholder="Leave blank to email a reset link"
-          hint="If omitted, Supabase will send a password-setup email to the owner."
+          placeholder="At least 8 characters"
+          hint="The shop owner will use this email and password to sign in."
         />
       </div>
     </Modal>
