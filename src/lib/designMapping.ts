@@ -6,6 +6,11 @@ export const DESIGN_TABLE_MAP: Record<string, DesignMappingEntry> = {
   design_03: { table: 'design_03_invitations', suffix: '_03' },
   design_04: { table: 'design_04_invitations', suffix: '_04' },
   design_05: { table: 'design_05_invitations', suffix: '_05' },
+  design_06: { table: 'design_06_invitations', suffix: '_06' },
+  design_07: { table: 'design_07_invitations', suffix: '_07' },
+  design_08: { table: 'design_08_invitations', suffix: '_08' },
+  design_09: { table: 'design_09_invitations', suffix: '_09' },
+  design_10: { table: 'design_10_invitations', suffix: '_10' },
 };
 
 export function resolveDesignTarget(designCode: string): DesignMappingEntry {

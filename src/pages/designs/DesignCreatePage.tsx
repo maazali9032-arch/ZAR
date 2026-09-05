@@ -26,8 +26,8 @@ export function DesignCreatePage() {
   const validate = () => {
     const e: Record<string, string> = {};
     if (!form.design_name.trim()) e.design_name = 'Design name is required';
-    if (!['design_01', 'design_02', 'design_03', 'design_04', 'design_05'].includes(form.design_code))
-      e.design_code = 'Select one of the five supported design codes.';
+    if (!['design_01', 'design_02', 'design_03', 'design_04', 'design_05', 'design_06', 'design_07', 'design_08', 'design_09', 'design_10'].includes(form.design_code))
+      e.design_code = 'Select one of the supported design codes.';
     if (!form.production_url.trim()) e.production_url = 'Production URL is required';
     else if (!/^https?:\/\/.+/.test(form.production_url.trim()))
       e.production_url = 'Must be a valid URL (starting with http:// or https://)';
@@ -114,6 +114,11 @@ export function DesignCreatePage() {
                   <option value="design_03">design_03</option>
                   <option value="design_04">design_04</option>
                   <option value="design_05">design_05</option>
+                  <option value="design_06">design_06</option>
+                  <option value="design_07">design_07</option>
+                  <option value="design_08">design_08</option>
+                  <option value="design_09">design_09</option>
+                  <option value="design_10">design_10</option>
                 </select>
                 {errors.design_code && <p className="mt-1 text-xs text-error-600">{errors.design_code}</p>}
                 <p className="mt-1 text-xs text-gray-500">Fixed securely to the corresponding invitation table.</p>
