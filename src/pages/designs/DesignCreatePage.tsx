@@ -26,7 +26,7 @@ export function DesignCreatePage() {
   const validate = () => {
     const e: Record<string, string> = {};
     if (!form.design_name.trim()) e.design_name = 'Design name is required';
-    if (!['design_01', 'design_02', 'design_03', 'design_04', 'design_05', 'design_06', 'design_07', 'design_08', 'design_09', 'design_10','design_11','design_12','design_13','design_14','design_15','design_16','design_17','design_18','design_19','design_20'].includes(form.design_code))
+    if (!['design_01', 'design_02', 'design_03', 'design_04', 'design_05', 'design_06', 'design_07', 'design_08', 'design_09', 'design_10','design_11','design_12','design_13','design_14','design_15','design_16','design_17','design_18','design_19','design_20','design_21'].includes(form.design_code))
       e.design_code = 'Select one of the supported design codes.';
     if (!form.production_url.trim()) e.production_url = 'Production URL is required';
     else if (!/^https?:\/\/.+/.test(form.production_url.trim()))
@@ -128,7 +128,8 @@ export function DesignCreatePage() {
                   <option value="design_17">Design 17</option>
                   <option value="design_18">Design 18</option>
                   <option value="design_19">Design 19</option>
-                  <option value="design_20">Design 20</option>                  
+                  <option value="design_20">Design 20</option>
+                  <option value="design_21">Design 21</option>                  
                 </select>
                 {errors.design_code && <p className="mt-1 text-xs text-error-600">{errors.design_code}</p>}
                 <p className="mt-1 text-xs text-gray-500">Fixed securely to the corresponding invitation table.</p>
